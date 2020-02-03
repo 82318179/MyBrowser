@@ -49,16 +49,20 @@ export default {
     if (this.page.location) {
       this.navigateTo(this.page.location);
     }
+    let webContents;
     this.$refs.webview.addEventListener("dom-ready", () => {
-      const webContents = this.$refs.webview.getWebContents();
-      webContents.on("new-window", (e, url) => {
-        if (!new URL(url).host) {
-          // Handle newUrl = 'about:blank' in some cases
-          return;
-        }
-        e.preventDefault();
-        this.bPage.onNewTab(url);
-      });
+      if (!webContents) {
+        webContents = this.$refs.webview.getWebContents();
+        webContents.on("new-window", (e, url) => {
+          if (!new URL(url).host) {
+            // Handle newUrl = 'about:blank' in some cases
+            return;
+          }
+          e.preventDefault();
+          console.log(11); //会执行两次
+          this.bPage.onNewTab(url);
+        });
+      }
     });
   }
 };
