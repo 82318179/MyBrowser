@@ -26,6 +26,7 @@ $hover: #eee;
 $border: #bbb;
 $nav: #f2f2f2;
 .tab {
+  -webkit-app-region: no-drag;
   box-sizing: border-box;
   width: 218px;
   min-width: 100px;
