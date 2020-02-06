@@ -3,7 +3,8 @@
 import {
   app,
   protocol,
-  BrowserWindow
+  BrowserWindow,
+  dialog
 } from 'electron'
 import {
   createProtocol,
@@ -28,7 +29,8 @@ try {
   let flash = app.getPath('pepperFlashSystemPlugin');
   app.commandLine.appendSwitch('ppapi-flash-path', flash);
 } catch (e) {
-  console.log('err:' + e);
+  dialog.showErrorBox('缺少flash插件', '请前往https://www.flash.cn/下载该插件,点击确定后将打开flash下载地址');
+  process.argv[1] = 'https://www.flash.cn/';
 }
 
 function createWindow() {
@@ -39,7 +41,8 @@ function createWindow() {
     frame: false,
     webPreferences: {
       nodeIntegration: true,
-      webviewTag: true
+      webviewTag: true,
+      // 'plugins': true
     }
   })
 

@@ -3411,7 +3411,7 @@ electron-to-chromium@^1.3.338:
   resolved "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.340.tgz#5d4fe78e984d4211194cf5a52e08069543da146f"
   integrity sha1-XU/njphNQhEZTPWlLggGlUPaFG8=
 
-electron@^6.0.0:
+electron@^6.1.7:
   version "6.1.7"
   resolved "https://registry.npm.taobao.org/electron/download/electron-6.1.7.tgz#a67695f81f5cb771e395bcf9711560520e347c54"
   integrity sha1-pnaV+B9ct3Hjlbz5cRVgUg40fFQ=
