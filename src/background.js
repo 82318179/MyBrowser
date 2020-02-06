@@ -24,6 +24,13 @@ protocol.registerSchemesAsPrivileged([{
   }
 }])
 
+try {
+  let flash = app.getPath('pepperFlashSystemPlugin');
+  app.commandLine.appendSwitch('ppapi-flash-path', flash);
+} catch (e) {
+  console.log('err:' + e);
+}
+
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({

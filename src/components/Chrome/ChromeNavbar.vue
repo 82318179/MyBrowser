@@ -86,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 $hoverColor: #ccc;
 $borderColor: #bbb;
-$navColor: #f2f2f2;
+$navColor: #fff;
 $iconColor: #6d6d6d;
 $icon-hoverColor: #dfdfdf;
 $icon-focusColor: #aaa;
@@ -95,7 +95,7 @@ $icon-focusColor: #aaa;
   align-items: center;
   background-color: $navColor;
   border-top: 1px solid $borderColor;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
   padding: 0 4px;
   height: 38px;
   a {

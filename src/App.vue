@@ -31,4 +31,9 @@ ul {
 li {
   list-style: none;
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 </style>

@@ -22,7 +22,7 @@ function createPageObject(location = "https://www.baidu.com/") {
   return {
     location: location,
     statusText: false,
-    title: "New Tab",
+    title: "",
     isLoading: false,
     isSearching: false,
     canGoBack: false,
@@ -142,8 +142,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid #dbdbdb;
-  box-shadow: 0 0 20px #aaa;
+  border: 1px solid #f5f5f5;
 }
 .content {
   flex-grow: 1;

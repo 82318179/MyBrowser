@@ -59,7 +59,6 @@ export default {
             return;
           }
           e.preventDefault();
-          console.log(11); //会执行两次
           this.bPage.onNewTab(url);
         });
       }

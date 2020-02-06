@@ -7,7 +7,7 @@
         :key="index"
         :tab="tab"
       ></chrome-tab>
-      <div @click="tabbar.onNewTab" class="add" />
+      <div @click="tabbar.onNewTab('https://www.baidu.com/')" class="add" />
     </ul>
     <div class="widget">哈哈，学习学习</div>
   </div>
@@ -48,8 +48,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$background-color: #dbdbdb;
-$border: #bbb;
+$background-color: #f5f5f5;
+$border: #ccc;
 $border-radius: 4px;
 .container {
   display: flex;

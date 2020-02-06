@@ -26,6 +26,7 @@ $hover: #eee;
 $border: #bbb;
 $nav: #f2f2f2;
 .tab {
+  box-sizing: border-box;
   width: 218px;
   min-width: 100px;
   display: flex;
@@ -46,72 +47,87 @@ $nav: #f2f2f2;
       background-color: $border;
     }
   }
-
+  &:nth-of-type(1) {
+    &::before {
+      height: 30px;
+      border-bottom: 1px solid $border;
+    }
+    &.active {
+      height: 31px;
+    }
+  }
   &.active {
-    background-color: $nav;
-    height: 29px;
-    border-bottom: 1px solid $nav;
-    transition: all 0.1s;
+    background-color: #fff;
+    height: 31px;
+    border-bottom: 1px solid #fff;
+    transition: all 0s;
+    z-index: 100000;
     &::before,
     &::after {
       z-index: 10;
-      transition: all 0.1s;
+      transition: all 0s;
       align-self: flex-start;
-      height: 28px;
-      background-color: $nav;
-      border-bottom: 1px solid $nav;
+      height: 31px;
+      background-color: #fff;
+      border-bottom: 1px solid #fff;
     }
   }
   .close {
     fill: #000;
     width: 12px;
+    min-width: 12px;
     height: 12px;
     border-radius: 50%;
     z-index: 100;
     margin-left: 2px;
     margin-right: 2px;
+    cursor: pointer;
     &:hover {
       fill: #fff;
       background-color: #f00;
     }
   }
+
   &::before {
     content: "";
     position: absolute;
     z-index: 0;
-    left: 0;
+    left: -1px;
+    top: -1px;
     width: 16px;
-    height: 28px;
+    height: 26px;
     background-color: $background-color;
+    border-top: 1px solid $border;
     border-left: 1px solid $border;
     transform: skewX(-25deg);
     transform-origin: left top;
-    transition: background-color 0.5s;
+    transition: background-color 0s;
   }
   &::after {
     content: "";
     position: absolute;
     z-index: 1;
-    right: 0;
+    top: -1px;
+    right: -1px;
     width: 16px;
-    height: 28px;
+    height: 30px;
     background-color: $background-color;
+    border-top: 1px solid $border;
     border-right: 1px solid $border;
     border-bottom: 1px solid $border;
     transform: skewX(25deg);
     transform-origin: right top;
-    transition: background-color 0.5s;
+    transition: background-color 0s;
   }
   .content {
     flex-grow: 1;
-    padding-left: 2px;
+    padding-left: 12px;
     font-size: 12px;
     line-height: 28px;
-    cursor: pointer;
     user-select: none;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: clip;
+    text-overflow: ellipsis;
   }
 }
 </style>
