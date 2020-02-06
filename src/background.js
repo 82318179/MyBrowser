@@ -42,7 +42,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
-      // 'plugins': true
+      'plugins': true
     }
   })
 
