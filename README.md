@@ -1,5 +1,9 @@
 # mybrowser
 
+预览效果
+
+![效果图](./src/assets/demo.jpg)
+
 ## Project setup
 
 ```
