@@ -1,6 +1,10 @@
 <template>
   <div id="browser-page" :class="{ hidden: !isActive }">
-    <webview ref="webview" :preload="preload"></webview>
+    <webview
+      src="https://www.baidu.com/"
+      ref="webview"
+      :preload="preload"
+    ></webview>
     <ChromeFrameStatus :status="status"></ChromeFrameStatus>
   </div>
 </template>
@@ -31,11 +35,13 @@ export default {
       return this.bPage.pageIndex == this.bPage.currentPageIndex;
     },
     preload() {
-      return url.format({
-        pathname: path.join(__dirname, "../../preloads/webview-preload.js"),
-        protocol: "file:",
-        slashes: true
-      });
+      // return url.format({
+      //   pathname: path.join(__dirname, "../../preloads/webview-preload.js"),
+      //   protocol: "file:",
+      //   slashes: true
+      // });
+      //return path.join(__dirname, "../../../public/preload.js");
+      return path.join(__static, "./preload.js");
     }
   },
   components: {
