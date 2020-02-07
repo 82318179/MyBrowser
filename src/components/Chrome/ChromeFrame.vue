@@ -1,10 +1,6 @@
 <template>
   <div id="browser-page" :class="{ hidden: !isActive }">
-    <webview
-      src="https://www.baidu.com/"
-      ref="webview"
-      :preload="preload"
-    ></webview>
+    <webview src="https://www.baidu.com/" ref="webview" :preload="preload"></webview>
     <ChromeFrameStatus :status="status"></ChromeFrameStatus>
   </div>
 </template>
@@ -97,6 +93,10 @@ export default {
         this.bPage.onNewTab(e.url);
       }
     });
+
+    this.$refs.webview.onmousedown = e => {
+      console.log(22);
+    };
   }
 };
 let webviewEvents = {
