@@ -13,5 +13,5 @@ window.addEventListener('contextmenu', e => {
 
         //ipcRenderer.send('elm', data)
     }
-    alert(e);
+    alert(2222);
 });

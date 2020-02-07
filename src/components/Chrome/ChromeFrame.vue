@@ -36,7 +36,7 @@ export default {
       //   protocol: "file:",
       //   slashes: true
       // });
-      //return path.join(__dirname, "../../../public/preload.js");
+      // return path.join(__dirname, "../../../public/preload.js");
       return path.join(__static, "./preload.js");
     }
   },
@@ -93,10 +93,6 @@ export default {
         this.bPage.onNewTab(e.url);
       }
     });
-
-    this.$refs.webview.onmousedown = e => {
-      console.log(22);
-    };
   }
 };
 let webviewEvents = {
