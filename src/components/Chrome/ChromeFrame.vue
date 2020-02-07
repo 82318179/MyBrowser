@@ -7,6 +7,7 @@
 
 <script>
 // import process from "process";
+import url from "url";
 import ChromeFrameStatus from "./ChromeFrameStatus";
 export default {
   props: ["bPage"],
@@ -50,24 +51,37 @@ export default {
       this.navigateTo(this.page.location);
     }
 
-    try {
-      let webContents;
-      this.$refs.webview.addEventListener("dom-ready", () => {
-        if (!webContents) {
-          webContents = this.$refs.webview.getWebContents();
-          webContents.on("new-window", (e, url) => {
-            if (!new URL(url).host) {
-              // Handle newUrl = 'about:blank' in some cases
-              return;
-            }
-            e.preventDefault();
-            this.bPage.onNewTab(url);
-          });
-        }
-      });
-    } catch (e) {
-      // console.log("111:" + e);
-    }
+    // try {
+    //   let webContents;
+    //   this.$refs.webview.addEventListener("dom-ready", () => {
+    //     if (!webContents) {
+    //       webContents = this.$refs.webview.getWebContents();
+    //       webContents.on("new-window", (e, url) => {
+    //         if (!new URL(url).host) {
+    //           // Handle newUrl = 'about:blank' in some cases
+    //           return;
+    //         }
+    //         e.preventDefault();
+    //         this.bPage.onNewTab(url);
+    //       });
+    //     }
+    //   });
+    // } catch (e) {
+    //   // console.log("111:" + e);
+    // }
+
+    this.$refs.webview.addEventListener("new-window", e => {
+      //访客页面尝试打开新的浏览器窗口时触发
+      const protocol = url.parse(e.url).protocol;
+      // console.log("protocol:" + protocol);
+      if (
+        protocol === "http:" ||
+        protocol === "https:" ||
+        protocol === "about:blank"
+      ) {
+        this.bPage.onNewTab(e.url);
+      }
+    });
   }
 };
 let webviewEvents = {
