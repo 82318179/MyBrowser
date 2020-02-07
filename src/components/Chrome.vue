@@ -18,7 +18,7 @@
 import ChromeTabbar from "./Chrome/ChromeTabbar";
 import ChromeNavbar from "./Chrome/ChromeNavbar";
 import ChromeFrame from "./Chrome/ChromeFrame";
-function createPageObject(location = "http://v.baidu.com/topic/gzzgm") {
+function createPageObject(location = "https://www.baidu.com/") {
   return {
     location: location,
     statusText: false,

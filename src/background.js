@@ -30,7 +30,7 @@ try {
   app.commandLine.appendSwitch('ppapi-flash-path', flash);
 } catch (e) {
   dialog.showErrorBox('缺少flash插件', '请前往https://www.flash.cn/下载该插件,点击确定后将打开flash下载地址');
-  process.argv[1] = 'https://www.flash.cn/';
+  //process.argv[1] = 'https://www.flash.cn/';
 }
 
 function createWindow() {
@@ -42,7 +42,9 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
-      'plugins': true
+      webSecurity: false,
+      plugins: true,
+      // contextIsolation: true
     }
   })
 
