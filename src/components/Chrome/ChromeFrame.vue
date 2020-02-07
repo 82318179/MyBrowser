@@ -1,12 +1,13 @@
 <template>
   <div id="browser-page" :class="{ hidden: !isActive }">
-    <webview ref="webview"></webview>
+    <webview ref="webview" :preload="preload"></webview>
     <ChromeFrameStatus :status="status"></ChromeFrameStatus>
   </div>
 </template>
 
 <script>
 // import process from "process";
+import path from "path";
 import url from "url";
 import ChromeFrameStatus from "./ChromeFrameStatus";
 export default {
@@ -28,6 +29,13 @@ export default {
     },
     isActive() {
       return this.bPage.pageIndex == this.bPage.currentPageIndex;
+    },
+    preload() {
+      return url.format({
+        pathname: path.join(__dirname, "../../preloads/webview-preload.js"),
+        protocol: "file:",
+        slashes: true
+      });
     }
   },
   components: {
@@ -54,9 +62,11 @@ export default {
     // try {
     //   let webContents;
     //   this.$refs.webview.addEventListener("dom-ready", () => {
+    //     console.log("dom-ready");
     //     if (!webContents) {
     //       webContents = this.$refs.webview.getWebContents();
     //       webContents.on("new-window", (e, url) => {
+    //         console.log("webContentsnew-window");
     //         if (!new URL(url).host) {
     //           // Handle newUrl = 'about:blank' in some cases
     //           return;
@@ -73,7 +83,6 @@ export default {
     this.$refs.webview.addEventListener("new-window", e => {
       //访客页面尝试打开新的浏览器窗口时触发
       const protocol = url.parse(e.url).protocol;
-      // console.log("protocol:" + protocol);
       if (
         protocol === "http:" ||
         protocol === "https:" ||
