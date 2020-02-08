@@ -1,24 +1,24 @@
 <template>
-  <input type="text" @keyup.enter="onKeyUpEnter" v-model="loc.page.location" />
+	<input type="text" @keyup.enter="onKeyUpEnter" v-model="loc.page.location" />
 </template>
 
 <script>
 function normalizedUri(input) {
-  var prefix = "https://";
+	var prefix = 'https://';
 
-  if (!/^([^:/]+)(:\/\/)/g.test(input) && !prefix.includes(input)) {
-    input = prefix + input;
-  }
+	if (!/^([^:/]+)(:\/\/)/g.test(input) && !prefix.includes(input)) {
+		input = prefix + input;
+	}
 
-  return input;
+	return input;
 }
 export default {
-  props: ["loc"],
-  methods: {
-    onKeyUpEnter(e) {
-      this.loc.onEnterLocation(normalizedUri(e.target.value));
-    }
-  }
+	props: ['loc'],
+	methods: {
+		onKeyUpEnter(e) {
+			this.loc.onEnterLocation(normalizedUri(e.target.value));
+		}
+	}
 };
 </script>
 
