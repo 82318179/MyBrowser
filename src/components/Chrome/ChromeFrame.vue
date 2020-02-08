@@ -1,7 +1,7 @@
 <template>
   <div id="browser-page" :class="{ hidden: !isActive }">
     <div class="container">
-      <button @click="screenShot">截图</button>
+      <!-- <button @click="screenShot">截图</button> -->
       <webview
         src="https://www.baidu.com/"
         @dom-ready="ready"
@@ -42,12 +42,6 @@ export default {
       return this.bPage.pageIndex === this.bPage.currentPageIndex;
     },
     preload() {
-      // return url.format({
-      //   pathname: path.join(__dirname, "../../preloads/webview-preload.js"),
-      //   protocol: "file:",
-      //   slashes: true
-      // });
-      // return path.join(__dirname, "../../../public/preload.js");
       return path.join(__static, "./preload.js");
     }
   },
@@ -55,18 +49,7 @@ export default {
     ChromeFrameStatus
   },
   created() {
-    const menu = new Menu();
-    let _self = this;
-    menu.append(new MenuItem({ label: "撤销", role: "undo" }));
-    menu.append(
-      new MenuItem({
-        label: "show",
-        click() {
-          _self.screenShot();
-        }
-      })
-    );
-
+    let menu = this.getMenu();
     this.$ipc.on("browser", (e, type, data) => {
       switch (type) {
         case "mouseMenu":
@@ -80,7 +63,7 @@ export default {
   },
   methods: {
     ready(a) {
-      a.target.openDevTools();
+      // a.target.openDevTools();
     },
     screenShot() {
       this.$ipc.send("browser", "screenshot");
@@ -90,6 +73,28 @@ export default {
     },
     mouseMenu(e) {
       console.log(e);
+    },
+    getMenu() {
+      const menu = new Menu();
+      let _self = this;
+      menu.append(
+        new MenuItem({
+          label: "检查",
+          click: () => {
+            _self.$refs.webview.openDevTools();
+          }
+        })
+      );
+      menu.append(new MenuItem({ type: "separator" }));
+      menu.append(
+        new MenuItem({
+          label: "全页截图",
+          click() {
+            _self.screenShot();
+          }
+        })
+      );
+      return menu;
     }
   },
   mounted() {
@@ -104,28 +109,6 @@ export default {
     if (this.page.location) {
       this.navigateTo(this.page.location);
     }
-
-    // try {
-    //   let webContents;
-    //   this.$refs.webview.addEventListener("dom-ready", () => {
-    //     console.log("dom-ready");
-    //     if (!webContents) {
-    //       webContents = this.$refs.webview.getWebContents();
-    //       webContents.on("new-window", (e, url) => {
-    //         console.log("webContentsnew-window");
-    //         if (!new URL(url).host) {
-    //           // Handle newUrl = 'about:blank' in some cases
-    //           return;
-    //         }
-    //         e.preventDefault();
-    //         this.bPage.onNewTab(url);
-    //       });
-    //     }
-    //   });
-    // } catch (e) {
-    //   // console.log("111:" + e);
-    // }
-
     this.$refs.webview.addEventListener("new-window", e => {
       //访客页面尝试打开新的浏览器窗口时触发
       const protocol = url.parse(e.url).protocol;
