@@ -19,8 +19,7 @@
 import path from "path";
 import url from "url";
 import ChromeFrameStatus from "./ChromeFrameStatus";
-import { remote } from "electron";
-const { Menu, MenuItem } = remote;
+
 export default {
   props: ["bPage"],
   computed: {
@@ -48,53 +47,17 @@ export default {
   components: {
     ChromeFrameStatus
   },
-  created() {
-    let menu = this.getMenu();
-    this.$ipc.on("browser", (e, type, data) => {
-      switch (type) {
-        case "mouseMenu":
-          menu.popup(remote.getCurrentWindow());
-          break;
-      }
-    });
-    this.$ipc.on("screenshot", (e, type, data) => {
-      this.$refs.webview.send("screenshot", "打印成功");
-    });
-  },
+  created() {},
   methods: {
     ready(a) {
       // a.target.openDevTools();
     },
-    screenShot() {
-      this.$ipc.send("browser", "screenshot");
-    },
+
     navigateTo(l) {
       this.$refs.webview.setAttribute("src", l);
     },
     mouseMenu(e) {
       console.log(e);
-    },
-    getMenu() {
-      const menu = new Menu();
-      let _self = this;
-      menu.append(
-        new MenuItem({
-          label: "检查",
-          click: () => {
-            _self.$refs.webview.openDevTools();
-          }
-        })
-      );
-      menu.append(new MenuItem({ type: "separator" }));
-      menu.append(
-        new MenuItem({
-          label: "全页截图",
-          click() {
-            _self.screenShot();
-          }
-        })
-      );
-      return menu;
     }
   },
   mounted() {
@@ -120,6 +83,9 @@ export default {
         this.bPage.onNewTab(e.url);
       }
     });
+  },
+  beforeDestroy() {
+    console.log("销毁");
   }
 };
 let webviewEvents = {

@@ -1,29 +1,34 @@
 const remote = require('electron').remote;
 console.log(remote)
-const { ipcRenderer, ipcMain } = require('electron');
+const {
+	ipcRenderer,
+	ipcMain
+} = require('electron');
 let html2canvas = require('./html2canvas.min');
+
 function getURLBase64(url) {
 	return new Promise((resolve, reject) => {
 		let xhr = new XMLHttpRequest();
 		xhr.open('get', url, true);
 		xhr.responseType = 'blob';
-		xhr.onload = function() {
+		xhr.onload = function () {
 			if (this.status === 200) {
 				let blob = this.response;
 				let fileReader = new FileReader();
-				fileReader.onloadend = function(e) {
+				fileReader.onloadend = function (e) {
 					let result = e.target.result;
 					resolve(result);
 				};
 				fileReader.readAsDataURL(blob);
 			}
 		};
-		xhr.onerror = function() {
+		xhr.onerror = function () {
 			reject();
 		};
 		xhr.send();
 	});
 }
+
 function dataURLtoBlob(dataurl) {
 	let arr = dataurl.split(','),
 		mime = arr[0].match(/:(.*?);/)[1],
@@ -33,7 +38,9 @@ function dataURLtoBlob(dataurl) {
 	while (n--) {
 		u8arr[n] = bstr.charCodeAt(n);
 	}
-	return new Blob([u8arr], { type: mime });
+	return new Blob([u8arr], {
+		type: mime
+	});
 }
 
 function downloadFileByBase64(base64, name) {
@@ -63,15 +70,15 @@ function createImag() {
 		return downloadFileByBase64(canvas.toDataURL('image/png', 1.0), '截图.png');
 	});
 }
-document.onreadystatechange = function() {
+document.onreadystatechange = function () {
 	if (document.readyState === 'complete') {
 		Preload.init();
 	}
 };
 let Preload = {
-	init: function() {
+	init: function () {
 		console.log('初始化完成');
-		window.addEventListener('contextmenu', function(e) {
+		window.addEventListener('contextmenu', function (e) {
 			ipcRenderer.send('browser', 'mouseMenu', null);
 		});
 		ipcRenderer.on('screenshot', (e, data) => {
@@ -79,7 +86,7 @@ let Preload = {
 			this.screenShot();
 		});
 	},
-	screenShot: function() {
+	screenShot: function () {
 		let scrollHeight = document.body.scrollHeight;
 		let length = 0;
 		let perfix = scrollHeight / 100;
@@ -91,7 +98,7 @@ let Preload = {
 			} else {
 				let imgs = document.querySelectorAll('img');
 				for (let i = 0; i < imgs.length; i++) {
-					(function(i) {
+					(function (i) {
 						getURLBase64(imgs[i].src).then(r => {
 							imgs[i].src = r;
 						});
@@ -115,7 +122,7 @@ let Preload = {
 					img.src = 'data:image/svg+xml;base64,' + window.btoa(svg); //svg内容中不能有中文字符
 
 					//图片初始化完成后调用
-					img.onload = function() {
+					img.onload = function () {
 						//将canvas的宽高设置为图像的宽高
 						let canvas = document.createElement('canvas');
 						let c = canvas.getContext('2d');
